@@ -727,7 +727,9 @@ html.big .lbl.plaque i{width:16px;height:16px}
     if (!S.admin) return '';
     var msg = S.saving ? 'Publicando…' : S.dirty ? 'Tenés <b>cambios sin publicar</b>. Solo los ves vos hasta que toques Publicar.' : 'Modo administrador. Todo está publicado.';
     var dr = !S.dirty && readDraft();
-    return '<div class="admin"><p>' + msg + '</p><div class="admin-btns">' +
+    // Contador de escaneos del QR: lo provee la página que contiene el mapa (GitHub Pages), si existe
+    var scans = window.EXPO_SCANS_TEXT ? '<p>' + esc(window.EXPO_SCANS_TEXT) + '</p>' : '';
+    return '<div class="admin"><p>' + msg + '</p>' + scans + '<div class="admin-btns">' +
       '<button class="btn" type="button" data-act="add">Agregar proyecto</button>' +
       '<button class="btn" type="button" data-act="zone">Zona de puesta en marcha</button>' +
       '<button class="btn" type="button" data-act="event">Datos</button>' +
@@ -870,7 +872,8 @@ html.big .lbl.plaque i{width:16px;height:16px}
     S.dirty = JSON.stringify(DATA) !== PUBLISHED;
     store(DRAFT_KEY, S.dirty ? JSON.stringify({base: hash(PUBLISHED), data: JSON.stringify(DATA), at: Date.now()}) : null);
   }
-  function setAdmin(on){ S.admin = on; S.placing = null; sstore(ADMIN_KEY, on ? '1' : null); render(); }
+  function setAdmin(on){ S.admin = on; S.placing = null; sstore(ADMIN_KEY, on ? '1' : null); render(); if (on && window.EXPO_ON_ADMIN) window.EXPO_ON_ADMIN(); }
+  window.EXPO_RERENDER = function(){ render(); };
   $('c-admin').onclick = function(){
     if (S.admin){ setAdmin(false); toast('Saliste del modo administrador'); return; }
     openModal(
@@ -1040,6 +1043,20 @@ html.big .lbl.plaque i{width:16px;height:16px}
     setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 2000);
     return Promise.resolve({upload: UPLOAD});
   }};
+  // Contador de escaneos: el QR abre el link con ?qr y cada apertura así suma 1 (no cuenta al administrador)
+  var COUNTER = 'https://abacus.jasoncameron.dev', KEY = 'mapaproyectoimpa/qr';
+  var isAdmin = false; try { isAdmin = sessionStorage.getItem('expo-impa-admin') === '1'; } catch (e) {}
+  if (/[?&]qr(=|&|$)/.test(location.search)){
+    if (!isAdmin) fetch(COUNTER + '/hit/' + KEY).catch(function(){});
+    try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
+  }
+  window.EXPO_ON_ADMIN = function(){
+    fetch(COUNTER + '/get/' + KEY, {cache: 'no-store'}).then(function(r){ return r.ok ? r.json() : r.status === 404 ? {value: 0} : Promise.reject(); })
+      .then(function(d){ var n = +d.value || 0; window.EXPO_SCANS_TEXT = 'QR escaneado: ' + n + (n === 1 ? ' vez' : ' veces'); })
+      .catch(function(){ window.EXPO_SCANS_TEXT = 'QR escaneado: no se pudo leer el contador'; })
+      .then(function(){ window.EXPO_RERENDER(); });
+  };
+  if (isAdmin) window.EXPO_ON_ADMIN();
   fetch('datos.json?t=' + Date.now(), {cache: 'no-store'}).then(function(r){ return r.ok ? r.text() : null; })
     .then(function(t){ if (t) window.EXPO_REMOTE(JSON.stringify(JSON.parse(t))); }).catch(function(){});
 })();
