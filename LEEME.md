@@ -2,7 +2,7 @@
 
 Mapa del colegio para la muestra: los visitantes escanean el QR y ven dónde está cada proyecto y a qué hora se pone en marcha.
 
-- Link: https://agustinmsekul.github.io/mapaproyectoimpa/
+- Link: https://mapaproyectoimpa.github.io/
 - `index.html`: la página completa (mapa, lista y modo administrador).
 - `datos.json`: los proyectos y las zonas de puesta en marcha. La página lo lee cada vez que se abre.
 
