@@ -1032,7 +1032,7 @@ html.big .lbl.plaque i{width:16px;height:16px}
 <script>
 // En GitHub Pages: Publicar descarga datos.json para subirlo al repositorio, y al abrir se lee el datos.json publicado
 (function(){
-  var UPLOAD = 'https://github.com/agustinmsekul/expoimpa/upload/main';
+  var UPLOAD = 'https://github.com/agustinmsekul/mapaproyectoimpa/upload/main';
   window.EXPO_STORE = {save: function(json){
     var blob = new Blob([JSON.stringify(JSON.parse(json), null, 1) + '\n'], {type: 'application/json'});
     var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'datos.json';
