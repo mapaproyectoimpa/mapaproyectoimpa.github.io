@@ -1,58 +1,144 @@
 {
  "evento": {
   "nombre": "EXPO IMPA",
-  "fecha": "EEST N°7 · Taller Regional Quilmes"
+  "fecha": "EEST N°7 · Puestas en marcha de 13 a 19 hs"
  },
  "proyectos": [
   {
-   "id": "pmvvorq4cjo8n",
-   "x": 0.3431,
-   "y": 0.5588,
-   "nombre": "Tunel de Viento Aerodinamico",
-   "sector": "anexo",
-   "descripcion": "",
-   "horarios": [],
-   "duracion": 15,
-   "responsables": "7º2º AE"
-  },
-  {
-   "id": "pmvvosgxxzx63",
-   "x": 0.2007,
-   "y": 0.3587,
-   "nombre": "Proyecto CBR",
+   "id": "pmvvotlfpcpgz",
+   "x": 0.2608,
+   "y": 0.0512,
+   "nombre": "Banco Rotax",
    "sector": "aeronautica",
-   "descripcion": "",
-   "horarios": [],
-   "duracion": 15,
-   "responsables": "5º1º AE"
+   "descripcion": "Frente al Hangar de Aeronáutica.",
+   "horarios": [
+    "13:30",
+    "17:05"
+   ],
+   "duracion": 10,
+   "responsables": ""
   },
   {
-   "id": "pmvvosxmwf51i",
-   "x": 0.1785,
-   "y": 0.2791,
-   "nombre": "Bacota",
-   "sector": "otro",
-   "descripcion": "",
-   "horarios": [],
-   "duracion": 15,
+   "id": "beech",
+   "x": 0.0465,
+   "y": 0.122,
+   "nombre": "Aeronave Beechcraft Mentor E-011",
+   "sector": "aeronautica",
+   "descripcion": "Frente al Hangar de Aeronáutica.",
+   "horarios": [
+    "13:40",
+    "15:55",
+    "17:15"
+   ],
+   "duracion": 10,
    "responsables": ""
   },
   {
    "id": "pmvvot6uz6lwn",
    "x": 0.1722,
    "y": 0.2045,
-   "nombre": "Aerocommander",
+   "nombre": "Aeronave Aerocommander T-143",
    "sector": "aeronautica",
-   "descripcion": "",
-   "horarios": [],
+   "descripcion": "Frente al Hangar de Aeronáutica.",
+   "horarios": [
+    "13:50",
+    "16:05",
+    "17:25"
+   ],
+   "duracion": 10,
+   "responsables": ""
+  },
+  {
+   "id": "gloster",
+   "x": 0.0465,
+   "y": 0.1829,
+   "nombre": "Aeronave Gloster Meteor IV C-010",
+   "sector": "aeronautica",
+   "descripcion": "Frente al Hangar de Aeronáutica.",
+   "horarios": [
+    "14:00",
+    "16:15",
+    "17:35"
+   ],
+   "duracion": 10,
+   "responsables": ""
+  },
+  {
+   "id": "reaccion",
+   "x": 0.7419,
+   "y": 0.139,
+   "nombre": "Motores a reacción y turbohélice",
+   "sector": "aeronautica",
+   "descripcion": "Hangar de Motores Aeronáuticos, Taller de Motores a Reacción.",
+   "horarios": [
+    "14:10",
+    "16:25",
+    "17:45"
+   ],
    "duracion": 15,
    "responsables": ""
   },
   {
-   "id": "pmvvotlfpcpgz",
-   "x": 0.2608,
-   "y": 0.0512,
-   "nombre": "Motor Rotax",
+   "id": "pmvvosgxxzx63",
+   "x": 0.2007,
+   "y": 0.3587,
+   "nombre": "Motores Ford V8 y Honda CBR 600",
+   "sector": "aeronautica",
+   "descripcion": "Frente al Hangar de Aeronáutica.",
+   "horarios": [
+    "14:30",
+    "16:40",
+    "18:00"
+   ],
+   "duracion": 15,
+   "responsables": ""
+  },
+  {
+   "id": "simultanea",
+   "x": 0.0465,
+   "y": 0.2439,
+   "nombre": "Puesta en marcha simultánea",
+   "sector": "aeronautica",
+   "descripcion": "Frente al Hangar de Aeronáutica.",
+   "horarios": [
+    "14:45",
+    "16:50",
+    "18:15"
+   ],
+   "duracion": 15,
+   "responsables": ""
+  },
+  {
+   "id": "pmvvorq4cjo8n",
+   "x": 0.3431,
+   "y": 0.5588,
+   "nombre": "Ensayo túnel de viento",
+   "sector": "anexo",
+   "descripcion": "Anexo Aeronáutica.",
+   "horarios": [
+    "15:00"
+   ],
+   "duracion": 45,
+   "responsables": ""
+  },
+  {
+   "id": "astazou",
+   "x": 0.0465,
+   "y": 0.3049,
+   "nombre": "Puesta en marcha Astazou",
+   "sector": "aeronautica",
+   "descripcion": "Frente al Hangar de Aeronáutica.",
+   "horarios": [
+    "15:45"
+   ],
+   "duracion": 10,
+   "responsables": ""
+  },
+  {
+   "id": "pmvvosxmwf51i",
+   "x": 0.1785,
+   "y": 0.2791,
+   "nombre": "Bacota",
    "sector": "otro",
    "descripcion": "",
    "horarios": [],
