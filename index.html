@@ -227,7 +227,7 @@ html.big .lbl.plaque i{width:16px;height:16px}
 .status{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--card);border-radius:12px;margin-bottom:22px}
 .status .ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;flex:none;background:var(--red)}
 .status .ic svg{width:20px;height:20px}
-.status.live .ic{background:var(--green)}.status.done .ic,.status.none .ic{background:var(--gray)}
+.status.live .ic{background:var(--green)}.status.done .ic{background:var(--gray)}.status.none .ic{background:#32ade6}.num.none,.pin.none .dot{background:#32ade6}.row-s .c b{color:#1a8fc4}.libre{background:rgba(50,173,230,.14)}
 .status b{display:block;font-size:17px}.status span{color:var(--label2);font-size:14px}
 .times{display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px}
 .time{font-family:var(--f-round);font-weight:600;font-size:17px;padding:6px 12px;border-radius:999px;background:var(--fill);font-variant-numeric:tabular-nums}
@@ -357,7 +357,7 @@ html.big .lbl.plaque i{width:16px;height:16px}
     for (var i = 0; i < hs.length; i++) if (n >= hs[i] && n < hs[i] + d) return {k:'live', label:'En marcha ahora', start:hs[i], end:hs[i] + d};
     for (var j = 0; j < hs.length; j++) if (hs[j] > n) return {k:'next', label:'Próxima ' + fmt(hs[j]), start:hs[j]};
     if (hs.length) return {k:'done', label:'Ya terminó'};
-    return {k:'none', label:'Sin horario'};
+    return {k:'none', label:'Probalo cuando quieras'};
   }
   var ORDER = {live:0, soon:1, next:2, none:3, done:4};
   // Hora de la próxima puesta en marcha de toda la muestra (se pinta en amarillo)
@@ -823,7 +823,7 @@ html.big .lbl.plaque i{width:16px;height:16px}
     }).join('');
   }
   function rowHtml(p, st, right){
-    var sub = '<span class="' + (st.k === 'live' ? 'g' : st.k === 'next' ? 'b' : '') + '"><b>' + esc(st.label) + '</b></span> · ' + esc(sectorShort(p.sector));
+    var sub = '<span class="' + (st.k === 'live' ? 'g' : st.k === 'next' ? 'b' : st.k === 'none' ? 'c' : '') + '"><b>' + esc(st.label) + '</b></span> · ' + esc(sectorShort(p.sector));
     return '<button type="button" class="row" data-id="' + esc(p.id) + '"><span class="num ' + st.k + '">' + numOf(p) + '</span>' +
       '<span class="row-main"><span class="row-t" style="display:block">' + esc(p.nombre) + '</span><span class="row-s" style="display:block">' + sub + '</span></span>' +
       '<span class="row-r">' + (right || '') + IC.chev + '</span></button>';
@@ -877,14 +877,14 @@ html.big .lbl.plaque i{width:16px;height:16px}
     }
     h += '<p class="sec-t">Puestas en marcha · ' + vienen.length + '</p>';
     h += vienen.length ? '<div class="group">' + vienen.map(slotHtml).join('') + '</div>' : '<div class="empty"><p>' + (pasaron.length ? 'Ya terminaron todas las puestas en marcha de hoy.' : 'No hay puestas en marcha que coincidan.') + '</p></div>';
+    if (sinHora.length) h += '<p class="sec-t">Para probar cuando quieras · ' + sinHora.length + '</p><div class="group libre">' + sinHora.map(function(p){ return rowHtml(p, status(p, n), ''); }).join('') + '</div>';
     if (pasaron.length) h += '<p class="sec-t">Ya terminaron · ' + pasaron.length + '</p><div class="group">' + pasaron.map(slotHtml).join('') + '</div>';
-    if (sinHora.length) h += '<p class="sec-t">Otros proyectos</p><div class="group">' + sinHora.map(function(p){ return rowHtml(p, status(p, n), ''); }).join('') + '</div>';
     return h + legend;
   }
   function detailHtml(p, n){
     var st = pstatus(p, n, soonStart(n)), d = Math.max(1, +p.duracion || 15);
-    var ic = st.k === 'live' ? IC.play : st.k === 'done' ? IC.check : IC.clock;
-    var sub = st.k === 'live' ? 'Hasta las ' + fmt(st.end) : st.k === 'next' || st.k === 'soon' ? 'Dura unos ' + d + ' minutos' : st.k === 'done' ? 'Ya se hicieron todas las puestas en marcha' : 'Todavía no tiene horario cargado';
+    var ic = st.k === 'live' || st.k === 'none' ? IC.play : st.k === 'done' ? IC.check : IC.clock;
+    var sub = st.k === 'live' ? 'Hasta las ' + fmt(st.end) : st.k === 'next' || st.k === 'soon' ? 'Dura unos ' + d + ' minutos' : st.k === 'done' ? 'Ya se hicieron todas las puestas en marcha' : 'No tiene horario: se puede probar en cualquier momento';
     var times = (p.horarios || []).map(function(t){
       var m = toMin(t), k = n >= m + d ? 'past' : (n >= m ? 'live' : ((st.k === 'next' || st.k === 'soon') && st.start === m ? st.k : ''));
       return '<span class="time ' + k + '">' + esc(t) + '</span>';
@@ -902,7 +902,7 @@ html.big .lbl.plaque i{width:16px;height:16px}
   }
   var HELP = '<p class="sec-t">Cómo usar el mapa</p><div class="group help">' +
     '<div class="help-row"><span class="help-ic">' + '1' + '</span><span>Tocá un <b>número</b> en el mapa para ver qué proyecto es y a qué hora se pone en marcha.</span></div>' +
-    '<div class="help-row"><span class="help-ic b">' + IC.search + '</span><span>Tocá el <b>nombre de un edificio</b> para ver sus proyectos. En <b>Menú</b> está el cronograma: en <b>verde</b> lo que pasa ahora y en <b>amarillo</b> lo que sigue.</span></div>' +
+    '<div class="help-row"><span class="help-ic b">' + IC.search + '</span><span>Tocá el <b>nombre de un edificio</b> para ver sus proyectos. En <b>Menú</b> está el cronograma: en <b>verde</b> lo que pasa ahora y en <b>amarillo</b> lo que sigue y en <b>celeste</b> lo que podés probar cuando quieras.</span></div>' +
     '<div class="help-row"><span class="help-ic g">' + IC.expand + '</span><span>Con <b>dos dedos</b> acercás o alejás el mapa. El botón de arriba a la derecha vuelve a mostrar todo.</span></div>' +
     '<div class="help-row"><span class="help-ic o">Aa</span><span>Si querés <b>letras más grandes</b>, tocá Aa arriba a la derecha.</span></div></div>';
   var lastView = '';
@@ -1069,7 +1069,7 @@ html.big .lbl.plaque i{width:16px;height:16px}
       '<div class="form">' +
         '<div class="fld"><label for="f-hor">Horarios</label><input id="f-hor" inputmode="numeric" placeholder="10:00, 11:30, 15:00" value="' + esc(p ? (p.horarios || []).join(', ') : '') + '"></div>' +
         '<div class="fld"><label for="f-dur">Duración</label><input id="f-dur" type="number" min="1" max="240" inputmode="numeric" value="' + esc(p ? (p.duracion || 15) : 15) + '"><span style="color:var(--label2)">min</span></div>' +
-      '</div><p class="note">Horarios de puesta en marcha separados por coma, en formato 24 h.</p>' +
+      '</div><p class="note">Horarios de puesta en marcha separados por coma, en formato 24 h. Si lo dejás vacío, el proyecto aparece en <b style="color:#1a8fc4">celeste</b> como “para probar en cualquier momento”.</p>' +
       '<div class="form"><div class="fld col"><label for="f-desc">De qué trata</label><textarea id="f-desc" maxlength="700" placeholder="Contá en pocas líneas qué van a ver">' + esc(p ? p.descripcion : '') + '</textarea></div></div>' +
       '<p class="note">' + (P.x != null ? 'Ubicado en el mapa.' : 'Todavía no está ubicado en el mapa.') + '</p>' +
       '<p class="err" id="f-err"></p>' +
