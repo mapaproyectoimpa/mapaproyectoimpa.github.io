@@ -1,7 +1,11 @@
 {
  "evento": {
   "nombre": "EXPO IMPA",
-  "fecha": "EEST N°7 · Puestas en marcha de 13 a 19 hs"
+  "fecha": "EEST N°7 · Viernes 20 y sábado 21 · 13 a 19 hs",
+  "dias": [
+   "2026-11-20",
+   "2026-11-21"
+  ]
  },
  "proyectos": [
   {
@@ -82,7 +86,22 @@
    "id": "pmvvosgxxzx63",
    "x": 0.2007,
    "y": 0.3587,
-   "nombre": "Motores Ford V8 y Honda CBR 600",
+   "nombre": "Motor Ford V8",
+   "sector": "aeronautica",
+   "descripcion": "Frente al Hangar de Aeronáutica.",
+   "horarios": [
+    "14:30",
+    "16:40",
+    "18:00"
+   ],
+   "duracion": 15,
+   "responsables": ""
+  },
+  {
+   "id": "honda",
+   "x": 0.12,
+   "y": 0.395,
+   "nombre": "Motor Honda CBR 600",
    "sector": "aeronautica",
    "descripcion": "Frente al Hangar de Aeronáutica.",
    "horarios": [
